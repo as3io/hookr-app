@@ -15,7 +15,6 @@ const httpClient = (url, options = {}) => {
     const activeOrganization = initActiveOrg(null, { type: ORG_INIT });
     options.headers.set('X-Organization', activeOrganization.username);
   } catch (e) {
-    console.error('Unable to find an active organization -- are you logged in?');
     return Promise.reject(new Error('Unable to find an active organization -- are you logged in?'));
   }
   return fetchUtils.fetchJson(url, options);

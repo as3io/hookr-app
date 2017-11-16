@@ -15,7 +15,10 @@ export default (activeOrganization = null, { type, payload }) => {
     case ORG_INIT:
       try {
         let org = JSON.parse(localStorage.getItem('activeOrganization'));
-        if (org === null) org = getOrgs()[0];
+        if (org === null) {
+          const orgs = getOrgs();
+          return orgs.length ? orgs[0] : null;
+        }
         return org;
       } catch (e) {
         return null;
