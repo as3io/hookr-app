@@ -19,6 +19,18 @@ node {
         }
       }
     }
+
+    stage('Docker Build') {
+      docker.withRegistry('https://registry.hub.docker.com', 'docker-registry-login') {
+        prodDocker = docker.build("as3/hookr-app:v${env.BUILD_NUMBER}", '.')
+        myDocker.push("latest");
+        myDocker.push("v${env.BUILD_NUMBER}");
+      }
+      stage('Push Container') {
+          myDocker.push("latest");
+          myDocker.push("v${env.BUILD_NUMBER}");
+      }
+    }
   }
 
   stage("Copy Artifacts") {
